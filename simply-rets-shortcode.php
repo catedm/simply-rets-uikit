@@ -166,15 +166,14 @@ class SrShortcodes {
 
                         <div class="uk-inline uk-width-1-5@s">
                           <div class="uk-width-1-1" uk-form-custom="target: true">
-                              <!-- <button type="button" class="uk-button uk-button-default uk-width-1-1 property-search-page-form-dropdown-buttons">Type<span uk-icon="icon: triangle-down" style="position: relative; z-index: 2; right: 4px; top: 1px;"></span></button> -->
-                              <!-- <span uk-icon="icon: triangle-down" style="position: absolute; z-index: 6; top: 12px; left: 30%; color: #000;"></span> -->
-                              <select class="property-search-page-type-select" name="sr_ptype">
-                              <!-- <span uk-icon="icon: triangle-down"></span> -->
+                            <div class="sr-search-field uk-width-1-1" id="sr-search-ptype">
+                              <select class="property-search-page-type-select uk-width-1-1" name="sr_ptype">
                                 <option selected="true" disabled="disabled" value="">Type</option>
                                 $type_options;
                               </select>
+                            </div>
                           </div>
-                        </div>
+                        </div>                        
                         <div class="uk-inline uk-width-1-5@s">
                           <input class="submit button btn uk-button uk-button-primary" type="submit" value="Update" style="margin-top: 0; width: 100%;">
                         </div>
@@ -730,7 +729,117 @@ HTML;
         }
 
         ?>
+
         <div id="sr-search-wrapper">
+          <!-- <h3>Search Listings</h3> -->
+          <div class="sr-minmax-filters">
+          <form method="get" class="uk-grid-small sr-search sr-map-search-form uk-width-1-1 uk-margin-top" uk-grid>
+            <input type="hidden" name="sr-listings" value="sr-search">
+                <div class="uk-inline uk-width-1-1@s">
+                  <span class="uk-form-icon" uk-icon="icon: search" style="width: 74px;"></span>
+                  <input class="uk-input"
+                         name="sr_keywords"
+                         type="text"
+                         placeholder="Subdivision, Zipcode, $MLS_text Area, $MLS_text Number, or Market Area"
+                  />
+                </div>
+                <div class="uk-inline uk-width-1-5@s">
+                    <button class="uk-button uk-button-default uk-width-1-1 property-search-page-form-dropdown-buttons" type="button">Price<span uk-icon="icon: triangle-down"></span></button>
+
+                    <div uk-dropdown="mode: click;" class="property-search-dropdown">
+
+                      <h3>Price Range</h3>
+
+                      <div class="uk-grid-small" uk-grid>
+                        <div class="sr-search-field uk-width-1-2@s" id="sr-search-minprice">
+                          <input class="uk-input uk-width-1-2@s" name="sr_minprice" step="1000" min="0" type="number" placeholder="Min" />
+                        </div>
+                        <div class="sr-search-field uk-width-1-2@s" id="sr-search-maxprice">
+                          <input class="uk-input" name="sr_maxprice" step="1000" min="0" type="number" placeholder="Max" />
+                        </div>
+                      </div>
+
+
+                  <input class="submit button btn uk-button uk-button-primary" type="submit" value="Update" style="width: 100%;">
+                    </div>
+                </div>
+
+                  <div class="uk-inline uk-width-1-5@s">
+                      <button class="uk-button uk-button-default uk-width-1-1 property-search-page-form-dropdown-buttons" type="button">Beds<span uk-icon="icon: triangle-down"></span></button>
+
+                      <div uk-dropdown="mode: click;" class="property-search-dropdown">
+
+                        <h3>Beds</h3>
+
+                        <div class="uk-grid-small" uk-grid>
+                          <div class="sr-search-field uk-width-1-2@s" id="sr-search-minbeds">
+                            <input class="uk-input uk-width-1-2@s" name="sr_minbeds" step="1000" min="0" type="number" placeholder="Min" />
+                          </div>
+                          <div class="sr-search-field uk-width-1-2@s" id="sr-search-maxbeds">
+                            <input class="uk-input" name="sr_maxbeds" step="1000" min="0" type="number" placeholder="Max" />
+                          </div>
+                        </div>
+
+
+                    <input class="submit button btn uk-button uk-button-primary" type="submit" value="Update" style="width: 100%;">
+                      </div>
+                  </div>
+
+                  <div class="uk-inline uk-width-1-5@s">
+                      <button class="uk-button uk-button-default uk-width-1-1 property-search-page-form-dropdown-buttons" type="button">Baths<span uk-icon="icon: triangle-down"></span></button>
+
+                      <div uk-dropdown="mode: click;" class="property-search-dropdown">
+
+                        <h3>Baths</h3>
+
+                        <div class="uk-grid-small" uk-grid>
+                          <div class="sr-search-field uk-width-1-2@s" id="sr-search-minbaths">
+                            <input class="uk-input" name="sr_minbaths" min="0" type="number" placeholder="Min" />
+                          </div>
+                          <div class="sr-search-field uk-width-1-2@s" id="sr-search-maxbaths">
+                            <input class="uk-input" name="sr_maxbaths" min="0" type="number" placeholder="Max" />
+                          </div>
+                        </div>
+
+                    <input class="submit button btn uk-button uk-button-primary" type="submit" value="Update" style="width: 100%;">
+                      </div>
+                  </div>
+
+                  <div class="uk-inline uk-width-1-5@s">
+                    <div class="uk-width-1-1" uk-form-custom="target: true">
+                      <div class="sr-search-field uk-width-1-1" id="sr-search-ptype">
+                        <select class="property-search-page-type-select uk-width-1-1" name="sr_ptype">
+                          <option selected="true" disabled="disabled" value="">Type</option>
+                          <?php echo $type_options; ?>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="uk-inline uk-width-1-5@s">
+                    <input class="submit button btn uk-button uk-button-primary" type="submit" value="Update" style="margin-top: 0; width: 100%;">
+                  </div>
+                  <input type="hidden" name="sr_vendor"  value="$vendor" />
+                  <input type="hidden" name="sr_brokers" value="$brokers" />
+                  <input type="hidden" name="sr_agent"   value="$agent" />
+                  <input type="hidden" name="limit"      value="$limit" />
+
+                  <div>
+                      <div class="sr-sort-wrapper">
+                          <label for="sr_sort">Sort by: </label>
+                          <select class="select" name="sr_sort">
+                              <option value="">Sort Options</option>
+                              <option value="-listprice"> Price - High to Low</option>
+                              <option value="listprice"> Price - Low to High</option>
+                              <option value="-listdate"> List Date - New to Old</option>
+                              <option value="listdate"> List date - Old to New</option>
+                          </select>
+                      </div>
+                  </div>
+                </div>
+          </form>
+        </div>
+
+        <!-- <div id="sr-search-wrapper">
           <h3>Search Listings</h3>
           <form method="get" class="sr-search" action="<?php echo $home_url; ?>">
             <input type="hidden" name="sr-listings" value="sr-search">
@@ -797,7 +906,7 @@ HTML;
             <input type="hidden" name="status"     value="<?php echo $adv_status; ?>" />
 
           </form>
-        </div>
+        </div> -->
         <?php
 
         return ob_get_clean();
