@@ -1098,6 +1098,23 @@ HTML;
             </nav>
           </div>
         </div>
+        [wppb-restrict message="
+        <div id='register-now' class='uk-flex-top' uk-modal>
+            <div class='uk-modal-dialog uk-modal-body uk-margin-auto-vertical'>
+              <button class='uk-modal-close-default' type='button' uk-close></button>
+                <h2 class='uk-modal-title'>Register</h2>
+                <p class='uk-text-right'>
+                  [wppb-register]
+                </p>
+            </div>
+        </div>
+        <div class='uk-section uk-text-center'>
+          <div class='uk-container'>
+            <h3 class='uk-margin-bottom'>You must be a registered user to view this content.</h3><button class='uk-button uk-button-primary uk-width-1-1 uk-margin-bottom' type='button' uk-toggle='target: #register-now'>Register Now</button>
+          </div>
+        </div>
+        "
+        ]
           <div class="sr-details" style="text-align:left;">
             <!-- $listing_by_markup
             <p class="sr-details-links" style="clear:both;">
@@ -1402,6 +1419,7 @@ HTML;
             $mapMarkup
             <script>$lh_analytics</script>
           </div>
+          [/wppb-restrict]
 HTML;
         $cont .= SimplyRetsApiHelper::srContactFormDeliver();
         // $cont .= $contact_markup;
