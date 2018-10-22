@@ -137,32 +137,25 @@ var genMarkerPopup = function(
              : buildUglyLink(listing.mlsId, listing.address.full, siteRoot);
 
     var markup = '' +
-       '<div class="sr-iw-inner">' +
-       '  <h4 class="sr-iw-addr">' + addr + '<small> $' + price + '</small></h4>' +
-       '  <div class="sr-iw-inner__img">' +
-       '    <a href="' + link + '">' +
-       '      <img id="sr-iw-inner__img-img" src="' + photo +'">' +
-       '    </a>' +
-       '  </div>' +
-       '  <div class="sr-iw-inner__primary">' +
-       '    <p>' + beds + ' Beds | ' + baths + ' Baths | ' + stat + '</p>' +
-       '  </div>' +
-       '  <hr>' +
-       '  <div class="sr-iw-inner__secondary">' +
-       '    <p><strong>Price: </strong>$' + price + '</p>' +
-       '    <p><strong>' + mlsText + ' #: </strong>' + mlnum + '</p>' +
-       '    <p><strong>Area: </strong>' + sqft + '</p>' +
-       '    <p><strong>Property Type: </strong>' + type + '</p>' +
-       '    <p><strong>Property Style: </strong>' + style + '</p>' +
-       (office ? '<p><strong>Listing office: </strong>'+ office + '</p>' : '') +
-       (agent ? '<p><strong>Listing agent: </strong>'+ agent + '</p>' : '') +
-       '    <img src="' + idxImg + '"/>' +
-       '  </div>' +
-       '  <hr>' +
-       '  <div class="sr-iw-inner__view-details">' +
-       '    <a class="sr-iw-inner__details-link" href="' + link + '">View Details</a>' +
-       '  </div>' +
-       '</div>';
+    '<div class="uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>' +
+        '<div class="uk-card-media-left uk-cover-container">' +
+            '<img src="' + photo +'" alt="" uk-cover>' +
+            '<canvas width="600" height="400"></canvas>' +
+        '</div>' +
+        '<div>' +
+            '<div class="uk-card-body">' +
+                '<h3 class="uk-card-title uk-margin-remove">' + addr + '</h3>' +
+                '<h3 class="uk-card-title uk-margin-remove">$' + price + '</h3>' +
+                '<ul class="uk-list uk-list-striped uk-margin-small-top">' +
+                  '<li>' + beds + ' Beds | ' + baths + ' Baths | ' + stat + '</li>' +
+                  '<li>' + sqft + 'sqft' + '</li>' +
+                  '<li>' + 'Property Type: ' + type + '</li>' +
+                  '<li>' + 'Property Style: ' + style + '</li>' +
+              '</ul>' +
+              '<a href="' + link + '" class="uk-link-text">Get Details</a>'
+            '</div>' +
+        '</div>' +
+    '</div>';
 
     return markup;
 

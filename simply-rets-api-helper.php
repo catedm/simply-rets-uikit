@@ -1026,7 +1026,6 @@ HTML;
         <div uk-sticky>
           <div class="uk-section uk-section-muted uk-padding-small single-property-details-header">
             <h3 class="uk-text-center uk-margin-remove" style="color: #fff;">$listing_address - <span style="font-weight: bold;">$listing_price_USD</span></h3>
-            <!-- <h3 class="uk-text-center" style="font-weight: bold;"><span>$listing_price_USD</span></h3> -->
           </div>
           <div class="uk-grid-collapse uk-child-width-expand uk-text-center" style="border-bottom: 1px solid #D7D7D7;" uk-grid>
               <div>
@@ -1044,43 +1043,60 @@ HTML;
                     <h3 class="uk-margin-remove sticky-top-info-single-property-cell">$area - <small>SqFt</small></h3>
                   </div>
               </div>
-              <!-- <div>
-                  <div class="uk-background-muted uk-padding-small sticky-top-info-single-property-cell">
-                    <h3 class="uk-margin-remove">$mlsid - <small>Acres</small></h3>
-                  </div>
-              </div> -->
           </div>
-          <nav class="uk-navbar-container uk-margin-remove" style="background: #ececec;" uk-navbar>
-              <div class="uk-navbar-left">
-                  <ul class="uk-navbar-nav">
-                      <li>
-                          <a href="#">
-                              <span class="uk-icon uk-margin-small-right" uk-icon="icon: folder"></span>
-                              Print
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
-                              Add Favorite
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="uk-icon uk-margin-small-right" uk-icon="icon: comment"></span>
-                              Request Showing
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="uk-icon uk-margin-small-right" uk-icon="icon: location"></span>
-                              Map View
-                          </a>
-                      </li>
-                  </ul>
-
-              </div>
-          </nav>
+          <div id="mobile-single-property-deatils-options-menu">
+            <nav class="uk-navbar-container" uk-navbar="mode: click" style="background: #ececec;">
+                <div class="uk-navbar-right">
+                    <ul class="uk-navbar-nav">
+                        <li>
+                        <a class="uk-navbar-toggle" href="#">
+                          <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Menu</span>
+                        </a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                  <li><a href="#" onclick="window.print();return false;"><span class="uk-icon uk-margin-small-right" uk-icon="icon: folder; ratio: .5"></span>Print</a></li>
+                                  <li><a href="#"><span class="uk-icon uk-margin-small-right" uk-icon="icon: star; ratio: .5"></span>Add Favorite</a></li>
+                                  <li><a href="#" uk-toggle="target: #request-info"><span class="uk-icon uk-margin-small-right" uk-icon="icon: comment; ratio: .5"></span>Request Showing</a></li>
+                                  <li><a href="#details-map"><span class="uk-icon uk-margin-small-right" uk-icon="icon: location; ratio: .5"></span>Map View</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+          </div>
+          <div id="desktop-single-property-deatils-options-menu">
+            <nav class="uk-navbar-container uk-margin-remove" style="background: #ececec;" uk-navbar>
+                <div class="uk-navbar-left">
+                    <ul class="uk-navbar-nav">
+                        <li>
+                            <a href="#" onclick="window.print();return false;">
+                                <span class="uk-icon uk-margin-small-right" uk-icon="icon: folder"></span>
+                                Print
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
+                                Add Favorite
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" uk-toggle="target: #request-info">
+                                <span class="uk-icon uk-margin-small-right" uk-icon="icon: comment"></span>
+                                Request Showing
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#details-map">
+                                <span class="uk-icon uk-margin-small-right" uk-icon="icon: location"></span>
+                                Map View
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+          </div>
         </div>
           <div class="sr-details" style="text-align:left;">
             <!-- $listing_by_markup
@@ -1093,9 +1109,10 @@ HTML;
             </p> -->
             <div id="request-info" class="uk-flex-top" uk-modal>
                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                  <button class="uk-modal-close-default" type="button" uk-close></button>
                     <h2 class="uk-modal-title">Request More Info</h2>
                     <p class="uk-text-right">
-                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                      [gravityform id=2 title=false description=false]
                     </p>
                 </div>
             </div>
@@ -1138,8 +1155,9 @@ HTML;
                     <li>[gravityform id=2 title=false description=false]</li>
                   </ul>
                 </div>
-                <div>
-                  [sr_listings limit="3"]
+                <div class="single-property-details-desktop-similar-listings">
+                  <h3>Similar Listings</h3>
+                  [sr_listings limit="3" random="true"]
                 </div>
               </div>
               <div class="uk-width-1-3@m">
@@ -1272,7 +1290,11 @@ HTML;
                   </div>
                 </div>
               </div>
-                  </div>
+              <div class="single-property-details-mobile-similar-listings">
+                <h3>Similar Listings</h3>
+                [sr_listings limit="3"]
+              </div>
+              </div>
 
 
             <!-- <div class="sr-primary-details">
@@ -1382,11 +1404,11 @@ HTML;
           </div>
 HTML;
         $cont .= SimplyRetsApiHelper::srContactFormDeliver();
-        $cont .= $contact_markup;
+        // $cont .= $contact_markup;
 
         // Add disclaimer to the bottom of the page
-        $disclaimer = SrUtils::mkDisclaimerText($last_update);
-        $cont .= "<br/>{$disclaimer}";
+        // $disclaimer = SrUtils::mkDisclaimerText($last_update);
+        // $cont .= "<br/>{$disclaimer}";
 
         return $cont;
     }
@@ -1614,11 +1636,10 @@ HTML;
                 <div class="uk-card uk-card-default">
                   <a href="$link">
                     <div class="uk-card-media-top uk-background-cover" data-src="$main_photo" style="height: 200px;" uk-img>
-                        <!-- <img src="$main_photo" alt=""> -->
                     </div>
                   </a>
                     <div class="uk-card-body">
-                      <h3 class="uk-card-title uk-text-center" style="font-size: 17px; height: 69px;">$address</h3>
+                      <h3 class="uk-card-title uk-text-center" style="font-size: 17px; height: 35px;">$address</h3>
                       <h3 class="uk-card-title uk-text-center" style="font-weight: bold;">$listing_USD</h3>
                       <ul class="uk-list uk-list-striped property-details-results-pages">
                         $bedsMarkup
@@ -1703,7 +1724,7 @@ HTML;
         $disclaimer_text = SrUtils::mkDisclaimerText($lastUpdate);
 
         $cont .= "<hr><p class='sr-pagination'>$prev_link $next_link</p>";
-        $cont .= "<br>{$disclaimer_text}";
+        $cont .= "<br><p class='sr-disclaimer-text'>{$disclaimer_text}</p>";
 
         return $cont;
 
