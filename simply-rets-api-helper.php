@@ -1055,13 +1055,15 @@ HTML;
                             <div class="uk-navbar-dropdown">
                                 <ul class="uk-nav uk-navbar-dropdown-nav">
                                   <li><a href="#" onclick="window.print();return false;"><span class="uk-icon uk-margin-small-right" uk-icon="icon: folder; ratio: .5"></span>Print</a></li>
-                                  <li><a href="#"><span class="uk-icon uk-margin-small-right" uk-icon="icon: star; ratio: .5"></span>Add Favorite</a></li>
                                   <li><a href="#" uk-toggle="target: #request-info"><span class="uk-icon uk-margin-small-right" uk-icon="icon: comment; ratio: .5"></span>Request Showing</a></li>
-                                  <li><a href="#details-map"><span class="uk-icon uk-margin-small-right" uk-icon="icon: location; ratio: .5"></span>Map View</a></li>
+                                  <li><a href="#details-map" uk-scroll><span class="uk-icon uk-margin-small-right" uk-icon="icon: location; ratio: .5"></span>Map View</a></li>
                                 </ul>
                             </div>
                         </li>
                     </ul>
+                </div>
+                <div class="mobile-favorite-button">
+                  [favorite_button]
                 </div>
             </nav>
           </div>
@@ -1076,41 +1078,29 @@ HTML;
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <span class="uk-icon uk-margin-small-right" uk-icon="icon: star"></span>
-                                Add Favorite
-                            </a>
-                        </li>
-                        <li>
                             <a href="#" uk-toggle="target: #request-info">
                                 <span class="uk-icon uk-margin-small-right" uk-icon="icon: comment"></span>
                                 Request Showing
                             </a>
                         </li>
                         <li>
-                            <a href="#details-map">
+                            <a href="#details-map" uk-scroll>
                                 <span class="uk-icon uk-margin-small-right" uk-icon="icon: location"></span>
                                 Map View
                             </a>
                         </li>
                     </ul>
                 </div>
+                <div class="desktop-favorite-button">
+                  [favorite_button]
+                </div>
             </nav>
           </div>
         </div>
         [wppb-restrict message="
-        <div id='register-now' class='uk-flex-top' uk-modal>
-            <div class='uk-modal-dialog uk-modal-body uk-margin-auto-vertical'>
-              <button class='uk-modal-close-default' type='button' uk-close></button>
-                <h2 class='uk-modal-title'>Register</h2>
-                <p class='uk-text-right'>
-                  [wppb-register]
-                </p>
-            </div>
-        </div>
         <div class='uk-section uk-text-center'>
           <div class='uk-container'>
-            <h3 class='uk-margin-bottom'>You must be a registered user to view this content.</h3><button class='uk-button uk-button-primary uk-width-1-1 uk-margin-bottom' type='button' uk-toggle='target: #register-now'>Register Now</button>
+            <h3 class='uk-margin-bottom'>You must be a registered user to view this content.</h3><a class='uk-button uk-button-primary uk-margin-bottom' href='/register'>Register Now</a>
           </div>
         </div>
         "
@@ -1169,12 +1159,12 @@ HTML;
 
                   <ul class="uk-switcher uk-margin">
                     <li>[gravityform id=2 title=false description=false]</li>
-                    <li>[gravityform id=2 title=false description=false]</li>
+                    <li>[gravityform id=3 title=false description=false]</li>
                   </ul>
                 </div>
                 <div class="single-property-details-desktop-similar-listings">
                   <h3>Similar Listings</h3>
-                  [sr_listings limit="3" random="true"]
+                  [sr_listings limit="3" show_map=false]
                 </div>
               </div>
               <div class="uk-width-1-3@m">
@@ -1309,7 +1299,7 @@ HTML;
               </div>
               <div class="single-property-details-mobile-similar-listings">
                 <h3>Similar Listings</h3>
-                [sr_listings limit="3"]
+                [sr_listings limit="3" show_map=false]
               </div>
               </div>
 
@@ -1416,7 +1406,9 @@ HTML;
                 $mlsid
               </tbody>
             </table> -->
-            $mapMarkup
+            <div class="uk-margin-bottom">
+              $mapMarkup
+            </div>
             <script>$lh_analytics</script>
           </div>
           [/wppb-restrict]
@@ -1708,7 +1700,7 @@ HTML;
 
         }
 
-        $resultsMarkup = "<div id=\"sr-listings-results-list\" class=\"sr-map-search-list-view uk-grid-small uk-child-width-1-3@m\" uk-grid>{$resultsMarkup}</div>";
+        $resultsMarkup = "<div id=\"sr-listings-results-list\" class=\"uk-margin-top sr-map-search-list-view uk-grid-small uk-child-width-1-3@m\" uk-grid>{$resultsMarkup}</div>";
         $markerCount > 0 ? $mapMarkup = $mapHelper->render($map) : $mapMarkup = '';
 
         if( $map_setting == 'false' ) {

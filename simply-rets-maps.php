@@ -103,29 +103,25 @@ class SrSearchMap {
         $MLS_text = SrUtils::mkMLSText();
 
         $markup = <<<HTML
-            <div class="sr-iw-inner">
-              <h4 class="sr-iw-addr">$address<small> $price</small></h4>
-              <div class="sr-iw-inner__img">
-                <a href='$link'>
-                  <img id="sr-iw-inner__img-img" src='$photo'>
-                </a>
-              </div>
-              <div class="sr-iw-inner__primary">
-                <p>$beds Bed | $baths Bath | $status </p>
-              </div>
-              <hr>
-              <div class="sr-iw-inner__secondary">
-                <p><strong>$MLS_text #:</strong> $mlsid</p>
-                <p><strong>Area:</strong> $area SqFt</p>
-                <p><strong>Property Type:</strong> $propType</p>
-                <p><strong>Property Style:</strong> $style</p>
-                $compliance_markup
-              </div>
-              <hr>
-              <div class="sr-iw-inner__view-details">
-                <a href='$link' class='sr-iw-inner__details-link'>View Details</a>
-              </div>
+        <div class="uk-grid-collapse uk-child-width-1-2@s uk-margin" uk-grid>
+            <div class="uk-card-media-left uk-cover-container">
+                <img src="$photo" alt="" uk-cover>
+                <canvas width="600" height="400"></canvas>
             </div>
+            <div>
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title uk-margin-remove">$address</h3>
+                    <h3 class="uk-card-title uk-margin-remove">$price</h3>
+                    <ul class="uk-list uk-list-striped uk-margin-small-top">
+                      <li>$beds Beds | $baths Baths | $status</li>
+                      <li>$area sqft</li>
+                      <li>Property Type: $propType</li>
+                      <li>Property Style: $style</li>
+                  </ul>
+                  <a href="$link" class="uk-button uk-button-primary">Get Details</a>
+                </div>
+            </div>
+        </div>
 HTML;
 
         return $markup;

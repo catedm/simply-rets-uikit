@@ -152,7 +152,7 @@ var genMarkerPopup = function(
                   '<li>' + 'Property Type: ' + type + '</li>' +
                   '<li>' + 'Property Style: ' + style + '</li>' +
               '</ul>' +
-              '<a href="' + link + '" class="uk-link-text">Get Details</a>'
+              '<a href="' + link + '" class="uk-button uk-button-primary">Get Details</a>'
             '</div>' +
         '</div>' +
     '</div>';
