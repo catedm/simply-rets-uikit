@@ -398,7 +398,7 @@ class SimplyRetsApiHelper {
 
         // image gallery js
         wp_register_script('simply-rets-galleria-js',
-                           plugins_url('assets/galleria/galleria-1.4.2.min.js', __FILE__),
+                           plugins_url('assets/galleria/galleria-1.5.7.min.js', __FILE__),
                            array('jquery'));
         wp_enqueue_script('simply-rets-galleria-js');
 
@@ -960,7 +960,7 @@ HTML;
         );
 
 
-        $galleria_theme = plugins_url('assets/galleria/themes/classic/galleria.classic.min.js', __FILE__);
+        $galleria_theme = plugins_url('assets/galleria/themes/twelve/galleria.twelve.min.js', __FILE__);
 
         // Build details link for map marker
         $link = SrUtils::buildDetailsLink(
@@ -1062,9 +1062,9 @@ HTML;
                         </li>
                     </ul>
                 </div>
-                <div class="mobile-favorite-button">
+                <!-- <div class="mobile-favorite-button">
                   [favorite_button]
-                </div>
+                </div> -->
             </nav>
           </div>
           <div id="desktop-single-property-deatils-options-menu">
@@ -1091,20 +1091,12 @@ HTML;
                         </li>
                     </ul>
                 </div>
-                <div class="desktop-favorite-button">
+                <!-- <div class="desktop-favorite-button">
                   [favorite_button]
-                </div>
+                </div> -->
             </nav>
           </div>
         </div>
-        [wppb-restrict message="
-        <div class='uk-section uk-text-center'>
-          <div class='uk-container'>
-            <h3 class='uk-margin-bottom'>You must be a registered user to view this content.</h3><a class='uk-button uk-button-primary uk-margin-bottom' href='/register'>Register Now</a>
-          </div>
-        </div>
-        "
-        ]
           <div class="sr-details" style="text-align:left;">
             <!-- $listing_by_markup
             <p class="sr-details-links" style="clear:both;">
@@ -1117,18 +1109,12 @@ HTML;
             <div id="request-info" class="uk-flex-top" uk-modal>
                 <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
                   <button class="uk-modal-close-default" type="button" uk-close></button>
+                  [wppb-restrict message="You must be registered to ask about this property. <br /> <a class='uk-button uk-button-primary uk-margin-top' href='#register-modal' uk-toggle>Register Here</a>"]
                     <h2 class="uk-modal-title">Request More Info</h2>
-                    <p class="uk-text-right">
-                      [gravityform id=2 title=false description=false]
-                    </p>
-                </div>
-            </div>
-            <div id="send-to-mobile" class="uk-flex-top" uk-modal>
-                <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-                    <h2 class="uk-modal-title">Send to Mobile</h2>
-                    <p class="uk-text-right">
-                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                    </p>
+                        <p class="uk-text-right">
+                        [gravityform id=2 title=false description=false]
+                        </p>
+                  [/wppb-restrict]
                 </div>
             </div>
             <div class="uk-grid-match uk-grid-small" uk-grid>
@@ -1140,9 +1126,9 @@ HTML;
                           Galleria.loadTheme('$galleria_theme');
                           Galleria.configure({
                               height: 500,
-                              width:  "90%",
+                              width:  "100%",
                               showinfo: false,
-                              dummy: "$dummy",
+                              showImageNav: true,
                               lightbox: true,
                               imageCrop: false,
                               imageMargin: 0,
@@ -1151,20 +1137,45 @@ HTML;
                           Galleria.run('.sr-gallery');
                       }
                     </script>
-
                   <ul class="uk-subnav uk-subnav-pill" uk-switcher>
                     <li><a href="#">Ask About This Property</a></li>
                     <li><a href="#">Request a Showing</a></li>
                   </ul>
-
                   <ul class="uk-switcher uk-margin">
-                    <li>[gravityform id=2 title=false description=false]</li>
-                    <li>[gravityform id=3 title=false description=false]</li>
+                    <li>
+                      [wppb-restrict message="You must be registered to ask about this property. <br /> <a class='uk-button uk-button-primary uk-margin-top' href='#register-modal' uk-toggle>Register Here</a>"]
+                        [gravityform id=2 title=false description=false]
+                      [/wppb-restrict]
+                    </li>
+                    <li>
+                      [wppb-restrict message="You must be registered to request a showing. <br /> <a class='uk-button uk-button-primary uk-margin-top' href='#register-modal' uk-toggle>Register Here</a>"]
+                        [gravityform id=3 title=false description=false]
+                      [/wppb-restrict]
+                    </li>
                   </ul>
+                </div>
+                <div id="register-modal" class="uk-modal-full" style="z-index: 9999;" uk-modal>
+                    <div class="uk-modal-dialog" style="background: #2d2d2d;">
+                        <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+                        <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>
+                        <div class="uk-padding-large">
+					<h1 class="uk-margin-bottom" style="color: #fff;">What You Can Expect:</h1>
+						<ul class="uk-list uk-list-divider uk-margin-bottom" style="color: #fff;">
+							<li>Fastest, most comprehensive MLS updates<span uk-icon="icon: check;" style="margin-left: 10px;"></span></li>
+							<li>Instant Property Alerts<span uk-icon="icon: check;" style="margin-left: 10px;"></span></li>
+							<li>Updates on trends<span uk-icon="icon: check;" style="margin-left: 10px;"></span></li>
+							<li>Larger Full Screen Property Photos that Zillow and Realtor.com Don't Provide<span uk-icon="icon: check;" style="margin-left: 10px;"></span></li>
+						</ul>
+					<h1 class="uk-margin-bottom uk-margin-top" style="color: #fff;">Register for Mountain Homes Asheville</h1>
+                    [gravityform id=5 title=false description=false]
+				</div>
+                          <div class="uk-background-cover" style="background-image: url('/wp-content/uploads/2018/11/modalpic.jpg');" uk-height-viewport></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="single-property-details-desktop-similar-listings">
                   <h3>Similar Listings</h3>
-                  [sr_listings limit="3" show_map=false]
+                  [sr_listings limit="3" offset="10" show_map=false]
                 </div>
               </div>
               <div class="uk-width-1-3@m">
@@ -1172,8 +1183,9 @@ HTML;
                   <h1 class="uk-padding-small">$listing_address</h1>
                   $remarks_markup
                   <div class="uk-padding-small">
+                    [wppb-restrict message="You must be registered to ask about this property. <br /> <a class='uk-button uk-button-primary uk-margin-top' href='#register-modal' uk-toggle>Register Here</a>"]
                     <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-bottom" type="button" uk-toggle="target: #request-info">Request More Info</button>
-                    <button class="uk-button uk-button-primary uk-width-1-1" type="button" uk-toggle="target: #send-to-mobile">Send to Mobile Device</button>
+                    [/wppb-restrict]
                   </div>
                   <div class="uk-padding-small">
                     <h5 class="single-property-details">Essential Information</h5>
@@ -1411,7 +1423,6 @@ HTML;
             </div>
             <script>$lh_analytics</script>
           </div>
-          [/wppb-restrict]
 HTML;
         $cont .= SimplyRetsApiHelper::srContactFormDeliver();
         // $cont .= $contact_markup;

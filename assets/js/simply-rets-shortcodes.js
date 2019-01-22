@@ -1,7 +1,7 @@
 /**
  *
  * simply-rets-shortcodes.js - Copyright (c) 2014-2015 SimplyRETS
- * 
+ *
  * Author: Cody Reichert
  * License: GPLv3 (http://www.gnu.org/licenses/gpl.html)
  *
@@ -134,7 +134,7 @@ jQuery(document).ready(function() {
                            var limit    = e.data.limit !== "" && e.data.limit !== undefined
                                             ? 'limit="' + e.data.limit + '" '
                                             : '';
-                         
+
                            ed.selection.setContent(
                                  scStart
                                + type

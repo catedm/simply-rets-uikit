@@ -454,7 +454,7 @@ class srSearchFormWidget extends WP_Widget {
 
               <input type="hidden" name="sr_vendor" value="$vendor" >
 
-              <input class="submit button btn" type="submit" value="Search Properties">
+              <input class="uk-button uk-button-default submit button btn" type="submit" value="Search Properties">
 
             </form>
           </div>
