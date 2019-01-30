@@ -471,7 +471,7 @@ class SimplyRetsCustomPostPages {
 
 
     // TODO: not sure if this is entirely necessary...at one time it was
-    function srClearComments() {
+    public static function srClearComments() {
         global $post;
         if ( !( is_singular() && ( have_comments() || 'open' == $post->comment_status ) ) ) {
             return;
@@ -483,29 +483,55 @@ class SimplyRetsCustomPostPages {
     }
 
 
-    public static function srLoadPostTemplate() {
+    public static function srLoadPostTemplate($single) {
         $query_object = get_queried_object();
         $sr_post_type = 'sr-listings';
-        $page_template = get_post_meta( $query_object->ID, 'sr_page_template', true );
 
+        // If this isn't a SimplyRETS page, return default template
+        if ($query_object->post_type !== $sr_post_type) {
+            return $single;
+        }
 
-
+        // The user can use a custom template if the file name is:
+        // single-sr-listings.php
         $default_templates    = array();
-        $default_templates[]  = "single-{$query_object->post_type}-{$query_object->post_name}.php";
         $default_templates[]  = "single-{$query_object->post_type}.php";
         $default_templates[]  = "page.php";
 
-        // only apply our template to our CPT pages
-        if ( $query_object->post_type == $sr_post_type ) {
-            if ( !empty( $page_template ) ) {
-                $default_templates = $page_template;
-            }
+        // If the user is using a "SimplyRETS Page", they may select a
+        // specific template from the current theme.
+        $page_template = get_post_meta($query_object->ID, 'sr_page_template', true);
+        if (!empty($page_template)) {
+            $default_templates = $page_template;
         }
 
-        $new_template = locate_template( $default_templates, false );
+        // Resolve path to the template
+        $new_template = locate_template($default_templates, false);
+
         return $new_template;
     }
 
+    /**
+     * When loading a sr-listings page, this function will parse a GET
+     * (search) parameter, and return the original values, formatting
+     * query string, and an array of the values.
+     */
+    public static function parseGetParameter($name, $key, $params) {
+        $param = isset($_GET[$name]) ? $_GET[$name] : "";
+        $param_arr = is_array($param) ? $param : explode(";", $param);
+        $param_str = "";
+
+        if(is_array($param_arr) && !empty($param_arr)) {
+            foreach((array)$param_arr as $idx => $val) {
+                if (!empty($val)) {
+                    $final = trim($val);
+                    $param_str .= "&{$key}={$final}";
+                }
+            }
+        }
+
+        return array("param" => $param, "query" => $param_str);
+    }
 
     public static function srPostDefaultContent( $content ) {
         require_once( plugin_dir_path(__FILE__) . 'simply-rets-api-helper.php' );
@@ -640,47 +666,11 @@ class SimplyRetsCustomPostPages {
                 }
             }
 
-            $cities = isset($_GET['sr_cities']) ? $_GET['sr_cities'] : '';
-            $cities_string = "";
-            if(!empty($cities)) {
-                foreach((array)$cities as $key => $city) {
-                    $cities_string .= "&cities=$city";
-                }
-            }
-
-            $counties = isset($_GET['sr_counties']) ? $_GET['sr_counties'] : '';
-            $counties_string = "";
-            if(!empty($counties)) {
-                foreach((array)$counties as $key => $county) {
-                    $counties_string .= "&counties=$county";
-                }
-            }
-
             $agents = isset($_GET['sr_agent']) ? $_GET['sr_agent'] : '';
             $agents_string = "";
             if(!empty($agents)) {
                 foreach((array)$agents as $key => $agent) {
                     $agents_string .= "&agent=$agent";
-                }
-            }
-
-            $neighborhoods = isset($_GET['sr_neighborhoods']) ? $_GET['sr_neighborhoods'] : '';
-            $neighborhoods_string = "";
-            if(!empty($neighborhoods)) {
-                foreach((array)$neighborhoods as $key => $neighborhood) {
-                    $neighborhoods_string .= "&neighborhoods=$neighborhood";
-                }
-            }
-
-            /** Parse multiple postalCodes from short-code parameter */
-            $postalCodes = isset($_GET['sr_postalCodes']) ? $_GET['sr_postalCodes'] : '';
-            $postalCodes_string = "";
-            $postalCodes_arr = is_array($postalCodes) ? $postalCodes : explode(";", $postalCodes);
-
-            if(is_array($postalCodes_arr) && !empty($postalCodes_arr)) {
-                foreach((array)$postalCodes_arr as $key => $zip) {
-                    $final = trim($zip);
-                    $postalCodes_string .= "&postalCodes=$zip";
                 }
             }
 
@@ -691,6 +681,46 @@ class SimplyRetsCustomPostPages {
                     $amenities_string .= "&amenities=$amenity";
                 }
             }
+
+            /** Parse multiple postalCodes from short-code parameter */
+            $postalCodesData = SimplyRetsCustomPostPages::parseGetParameter(
+                "sr_postalCodes",
+                "postalCodes",
+                $_GET
+            );
+
+            $postalCodes = $postalCodesData["param"];
+            $postalCodes_string = $postalCodesData["query"];
+
+            /** Parse multiple cities from short-code parameter */
+            $citiesData = SimplyRetsCustomPostPages::parseGetParameter(
+                "sr_cities",
+                "cities",
+                $_GET
+            );
+
+            $cities = $citiesData["param"];
+            $cities_string = $citiesData["query"];
+
+            /** Parse multiple counties from short-code parameter */
+            $countiesData = SimplyRetsCustomPostPages::parseGetParameter(
+                "sr_counties",
+                "counties",
+                $_GET
+            );
+
+            $counties = $countiesData["param"];
+            $counties_string = $countiesData["query"];
+
+            /** Parse multiple neighborhoods from short-code parameter */
+            $neighborhoodsData = SimplyRetsCustomPostPages::parseGetParameter(
+                "sr_neighborhoods",
+                "neighborhoods",
+                $_GET
+            );
+
+            $neighborhoods = $neighborhoodsData["param"];
+            $neighborhoods_string = $neighborhoodsData["query"];
 
             /**
              * If `sr_q` is set, the user clicked a pagination link
@@ -786,7 +816,10 @@ class SimplyRetsCustomPostPages {
                 "agent" => get_query_var('sr_agent', ''),
                 "status" => $statuses_attribute,
                 "advanced" => $advanced == "true" ? "true" : "false",
-                "postalCodes" => $postalCodes
+                "postalCodes" => $postalCodes,
+                "cities" => $cities,
+                "counties" => $counties,
+                "neighborhoods" => $neighborhoods
             );
 
             // Create a string of attributes to put on the
