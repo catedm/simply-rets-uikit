@@ -463,6 +463,8 @@ HTML;
         $config_type = isset($atts['type']) ? $atts['type']   : '';
         $counties = isset($atts['counties']) ? $atts['counties'] : '';
         $postalCodes = isset($atts['postalcodes']) ? $atts['postalcodes'] : '';
+        $neighborhoods = isset($atts['neighborhoods']) ? $atts['neighborhoods'] : '';
+        $cities = isset($atts['cities']) ? $atts['cities'] : '';
 
         if($config_type === '') {
             $config_type = isset($_GET['sr_ptype']) ? $_GET['sr_ptype'] : '';
@@ -495,15 +497,13 @@ HTML;
          */
         $adv_cities = isset($_GET['sr_cities']) ? $_GET['sr_cities'] : array();
         if (empty($adv_cities) && array_key_exists('cities', $atts)) {
-            $adv_cities = $atts['cities'];
+            $adv_cities = explode(";", $atts['cities']);
         }
 
-        if( !$sort  == "" ) {
             $sort_price_hl = ($sort == "-listprice") ? "selected" : '';
             $sort_price_lh = ($sort == "listprice")  ? "selected" : '';
             $sort_date_hl  = ($sort == "-listdate")  ? "selected" : '';
             $sort_date_lh  = ($sort == "listdate")   ? "selected" : '';
-        }
 
         /**
          * Advanced Search Form.
@@ -515,6 +515,7 @@ HTML;
          * *amenities (int/ext), *status (active, pending, sold), area.
          */
         $type_options             = '';
+        $status_options           = "";
         $available_property_types = get_option("sr_adv_search_meta_types_$vendor", array());
         $default_type_option      = '<option value="">Property Type</option>';
 
@@ -543,6 +544,7 @@ HTML;
             }
         }
 
+        $city_options = "";
         $adv_search_cities = get_option("sr_adv_search_meta_city_$vendor", array());
         sort($adv_search_cities);
         foreach( (array)$adv_search_cities as $key=>$city ) {
@@ -559,6 +561,7 @@ HTML;
             }
         }
 
+        $location_options = "";
         $adv_search_neighborhoods= get_option("sr_adv_search_meta_neighborhoods_$vendor", array());
         sort( $adv_search_neighborhoods );
         foreach( (array)$adv_search_neighborhoods as $key=>$neighborhood) {
@@ -566,7 +569,7 @@ HTML;
             $location_options .= "<option value='$neighborhood' $checked>$neighborhood</option>";
         }
 
-
+        $features_options = "";
         $adv_search_features = get_option("sr_adv_search_meta_features_$vendor", array());
         sort( $adv_search_features );
         foreach( (array)$adv_search_features as $key=>$feature) {
@@ -832,6 +835,8 @@ HTML;
             <input type="hidden" name="sr_agent"   value="<?php echo $agent; ?>" />
             <input type="hidden" name="sr_counties" value="<?php echo $counties; ?>" />
             <input type="hidden" name="sr_postalCodes" value="<?php echo $postalCodes; ?>" />
+            <input type="hidden" name="sr_neighborhoods" value="<?php echo $neighborhoods; ?>" />
+            <input type="hidden" name="sr_cities" value="<?php echo $cities; ?>" />
             <input type="hidden" name="limit"      value="<?php echo $limit; ?>" />
             <input type="hidden" name="status"     value="<?php echo $adv_status; ?>" />
 
